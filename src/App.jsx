@@ -19,7 +19,7 @@ function App() {
   }, [])
   
 
-  const saveToLS = (params) => {
+  const backend = (params) => {
     localStorage.setItem("todos", JSON.stringify(todos))
   }
 
@@ -30,28 +30,28 @@ function App() {
   
 
 
-  const handleEdit = (e, id)=>{ 
+  const Edit = (e, id)=>{ 
     let t = todos.filter(i=>i.id === id) 
     setTodo(t[0].todo)
     let newTodos = todos.filter(item=>{
       return item.id!==id
     }); 
     setTodos(newTodos) 
-    saveToLS()
+    backend()
   }
 
-  const handleDelete= (e, id)=>{  
+  const Delete= (e, id)=>{  
     let newTodos = todos.filter(item=>{
       return item.id!==id
     }); 
     setTodos(newTodos) 
-    saveToLS()
+    backend()
   }
 
   const handleAdd= ()=>{
     setTodos([...todos, {id: uuidv4(), todo, isCompleted: false}])
     setTodo("") 
-    saveToLS()
+    backend()
   }
   
   const handleChange= (e)=>{ 
@@ -66,7 +66,7 @@ function App() {
     let newTodos = [...todos];
     newTodos[index].isCompleted = !newTodos[index].isCompleted;
     setTodos(newTodos)
-    saveToLS()
+    backend()
   }
   
 
@@ -97,8 +97,8 @@ function App() {
             <div className={item.isCompleted?"line-through":""}>{item.todo}</div>
             </div>
             <div className="buttons flex h-full">
-              <button onClick={(e)=>handleEdit(e, item.id)} className='bg-cyan-500 hover:bg-cyan-600 p-2 py-1 text-sm font-bold text-white rounded-md mx-1'><FaEdit /></button>
-              <button onClick={(e)=>{handleDelete(e, item.id)}} className='bg-cyan-500 hover:bg-cyan-600 p-2 py-1 text-sm font-bold text-white rounded-md mx-1'><AiFillDelete /></button>
+              <button onClick={(e)=>Edit(e, item.id)} className='bg-cyan-500 hover:bg-cyan-600 p-2 py-1 text-sm font-bold text-white rounded-md mx-1'><FaEdit /></button>
+              <button onClick={(e)=>{Delete(e, item.id)}} className='bg-cyan-500 hover:bg-cyan-600 p-2 py-1 text-sm font-bold text-white rounded-md mx-1'><AiFillDelete /></button>
             </div> 
           </div>
           })}
@@ -108,5 +108,6 @@ function App() {
     </>
   )
 }
+
 
 export default App
